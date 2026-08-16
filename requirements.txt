@@ -1,0 +1,49 @@
+# ── Hugging Face stack ──────────────────────────────
+huggingface_hub
+transformers
+datasets
+tokenizers
+accelerate
+safetensors
+evaluate
+sentence-transformers
+
+# ── Kaggle stack ────────────────────────────────────
+kaggle
+kagglehub
+
+# ── ML / Data ───────────────────────────────────────
+torch
+torchvision
+scikit-learn
+pandas
+polars
+numpy
+scipy
+pyarrow
+
+# ── Visualização ────────────────────────────────────
+matplotlib
+seaborn
+plotly
+
+# ── Notebooks ───────────────────────────────────────
+jupyterlab
+ipykernel
+ipywidgets
+
+# ── Utilidades / CLI ────────────────────────────────
+python-dotenv
+requests
+httpx
+tqdm
+rich
+typer
+gradio
+
+# ── Neuromatch Academy (curso compneuro local) ─────
+pykalman
+remfile
+statsmodels
+vibecheck
+mne
