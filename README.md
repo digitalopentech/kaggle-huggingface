@@ -9,6 +9,7 @@ Venv isolada (Python 3.12) com stack completo de ML/NLP e análise de sinais.
 |---|---|---|
 | [`notebooks/eeg-analise-sinais.ipynb`](notebooks/eeg-analise-sinais.ipynb) | EEG e detecção de crises epilépticas (FFT, PSD de Welch, espectrograma, Random Forest — ROC-AUC 0.998) | local |
 | [`kaggle-notebooks/neurociencia-tea/`](kaggle-notebooks/neurociencia-tea/) | Neurociência do TEA: triagem AQ-10 + conectividade cerebral DTI (ABIDE II) | [publicado no Kaggle](https://www.kaggle.com/code/leonardonunesrj/neuroci-ncia-do-tea-triagem-e-conectividade) |
+| [`hf-spaces/hodgkin-huxley/`](hf-spaces/hodgkin-huxley/) | O potencial de ação: modelo de Hodgkin-Huxley do zero (spike, limiar, curva F-I, refratariedade, ciclo-limite) | [publicado no Hugging Face](https://huggingface.co/spaces/leonardovalle/hodgkin-huxley-potencial-de-acao) |
 
 Complementa o material do curso aberto [Neuromatch Academy — Computational Neuroscience](https://compneuro.neuromatch.io)
 (clone esparso local em `../neuromatch-compneuro`, não versionado aqui por ser conteúdo de terceiros).
