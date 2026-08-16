@@ -47,3 +47,4 @@ remfile
 statsmodels
 vibecheck
 mne
+braindecode
