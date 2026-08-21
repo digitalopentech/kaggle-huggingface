@@ -41,7 +41,23 @@ def enviar(destino: str, texto: str) -> None:
         console.print("[red]❌ Defina TWILIO_FROM_NUMBER no .env[/red] (seu número Twilio)")
         sys.exit(1)
 
-    msg = cliente().messages.create(body=texto, from_=remetente, to=destino)
+    from twilio.base.exceptions import TwilioRestException
+
+    try:
+        msg = cliente().messages.create(body=texto, from_=remetente, to=destino)
+    except TwilioRestException as exc:
+        console.print(f"[red]❌ Twilio recusou o envio (HTTP {exc.status}, código {exc.code})[/red]")
+        console.print(f"   {exc.msg}")
+        DICAS = {
+            21408: "Habilite a região do destino em Console → Messaging → Settings → Geo Permissions.",
+            21608: "Conta trial: o número de destino precisa ser verificado no console.",
+            21606: "O número remetente não é seu ou não envia SMS. Confira TWILIO_FROM_NUMBER.",
+            21211: "Número inválido — use o formato E.164, ex.: +5521999999999.",
+        }
+        if exc.code in DICAS:
+            console.print(f"   [yellow]→ {DICAS[exc.code]}[/yellow]")
+        sys.exit(1)
+
     console.print(f"✅ Enviado para [bold]{destino}[/bold]")
     console.print(f"   SID: {msg.sid} | status: {msg.status}")
     if msg.error_message:
