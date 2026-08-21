@@ -36,6 +36,7 @@ make doctor
 |---|---|---|
 | Hugging Face | [huggingface.co/settings/tokens](https://huggingface.co/settings/tokens) | Criar token "Read" e colar em `HF_TOKEN` |
 | Kaggle | [kaggle.com/settings](https://www.kaggle.com/settings) → API → Create New Token | Colar o token `KGAT_...` em `KAGGLE_API_TOKEN` (formato antigo `username`/`key` também funciona) |
+| Twilio (opcional) | [console.twilio.com](https://console.twilio.com) | Copiar Account SID e Auth Token do painel + o número Twilio para `TWILIO_FROM_NUMBER` |
 
 > Downloads públicos do HF funcionam **sem token**. O Kaggle exige credenciais para tudo.
 
@@ -46,7 +47,34 @@ make doctor
 - **ML/Data**: `torch` + `torchvision` (com MPS/GPU do Apple Silicon), `scikit-learn`, `pandas`, `polars`, `numpy`, `scipy`, `pyarrow`
 - **Viz**: `matplotlib`, `seaborn`, `plotly`
 - **Notebooks**: JupyterLab + kernel registrado como **"HF-Kaggle Lab"**
-- **Extras**: `gradio` (demos/Spaces), `rich`, `typer`, `httpx`, `python-dotenv`
+- **Extras**: `gradio` (demos/Spaces), `twilio` (SMS), `rich`, `typer`, `httpx`, `python-dotenv`
+
+### Envio de SMS (Twilio)
+
+```bash
+python examples/twilio_sms.py --to +5521999999999 --texto "Treino concluído"
+make sms-status     # saldo da conta + últimas mensagens enviadas
+```
+
+Em Python:
+
+```python
+from twilio.rest import Client
+import os
+
+client = Client(os.environ["TWILIO_ACCOUNT_SID"], os.environ["TWILIO_AUTH_TOKEN"])
+msg = client.messages.create(
+    body="Pipeline finalizado ✅",
+    from_=os.environ["TWILIO_FROM_NUMBER"],
+    to="+5521999999999",   # sempre em formato E.164
+)
+print(msg.sid, msg.status)
+```
+
+> ⚠️ **Conta trial**: só envia para números que você verificou no console, e toda mensagem
+> leva um prefixo "Sent from your Twilio trial account".
+> ⚠️ **Brasil**: as operadoras exigem pré-registro para uso comercial (Sender ID
+> alfanumérico precisa de LOA e documentação). Para testes pessoais o número trial resolve.
 
 ## Comandos úteis
 

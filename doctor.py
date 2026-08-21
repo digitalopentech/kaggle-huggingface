@@ -23,7 +23,7 @@ def check_versions() -> None:
     for pkg in [
         "torch", "transformers", "datasets", "huggingface_hub",
         "sentence-transformers", "accelerate", "kaggle", "kagglehub",
-        "scikit-learn", "pandas", "polars", "jupyterlab", "gradio",
+        "scikit-learn", "pandas", "polars", "jupyterlab", "gradio", "twilio",
     ]:
         try:
             table.add_row(pkg, md.version(pkg))
@@ -69,7 +69,26 @@ def check_kaggle() -> None:
         console.print(f"❌ Credenciais presentes mas a API falhou: {exc}")
 
 
+def check_twilio() -> None:
+    console.rule("Twilio (SMS)")
+    sid, token = os.getenv("TWILIO_ACCOUNT_SID"), os.getenv("TWILIO_AUTH_TOKEN")
+    if not (sid and token):
+        console.print("❌ Sem credenciais. Preencha TWILIO_ACCOUNT_SID/TWILIO_AUTH_TOKEN no .env")
+        console.print("   (opcional — só necessário para enviar SMS)")
+        return
+    try:
+        from twilio.rest import Client
+
+        conta = Client(sid, token).api.accounts(sid).fetch()
+        console.print(f"✅ Conta [bold]{conta.friendly_name}[/bold] ({conta.type}, {conta.status})")
+        if not os.getenv("TWILIO_FROM_NUMBER"):
+            console.print("   [yellow]⚠️  defina TWILIO_FROM_NUMBER para conseguir enviar[/yellow]")
+    except Exception as exc:
+        console.print(f"❌ Credenciais presentes mas a API falhou: {str(exc)[:120]}")
+
+
 if __name__ == "__main__":
     check_versions()
     check_huggingface()
     check_kaggle()
+    check_twilio()

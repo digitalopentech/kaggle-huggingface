@@ -16,6 +16,10 @@ hf-test:
 kaggle-test:
 	.venv/bin/python examples/kaggle_quickstart.py
 
+# Status da conta Twilio (saldo + últimas mensagens)
+sms-status:
+	.venv/bin/python examples/twilio_sms.py --status
+
 # Congela as versões instaladas
 freeze:
 	.venv/bin/python -m pip freeze > requirements.lock.txt

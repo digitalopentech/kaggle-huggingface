@@ -48,3 +48,6 @@ statsmodels
 vibecheck
 mne
 braindecode
+
+# ── Twilio (SMS) ───────────────────────────────────
+twilio
